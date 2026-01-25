@@ -1,0 +1,23 @@
+# Maven / Gradle
+target/
+build/
+!.mvn/wrapper/maven-wrapper.jar
+
+# IDEs
+.vscode/
+.idea/
+*.iml
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Spring / temp
+*.tmp
+*.swp
+
+# Env
+.env
