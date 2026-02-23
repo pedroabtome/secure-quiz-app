@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz List</title>
+</head>
+<body>
+<h1>Quiz List (Admin)</h1>
+
+<p><a th:href="@{/addQuiz}">Add Quiz</a></p>
+
+<div th:if="${quizzes == null or #lists.isEmpty(quizzes)}">
+    <p>No quizzes available.</p>
+</div>
+
+<ul th:if="${quizzes != null and !#lists.isEmpty(quizzes)}">
+    <li th:each="quiz : ${quizzes}">
+        <span th:text="${quiz.id}">1</span> -
+        <span th:text="${quiz.questionText}">Question text</span>
+        <a th:href="@{'/editQuiz/' + ${quiz.id}}">Edit</a>
+        <a th:href="@{'/deleteQuiz/' + ${quiz.id}}">Delete</a>
+    </li>
+</ul>
+</body>
+</html>

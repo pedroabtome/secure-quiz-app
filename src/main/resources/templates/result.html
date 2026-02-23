@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Result</title>
+</head>
+<body>
+<h1>Quiz Result</h1>
+
+<p th:if="${score != null}">
+    Your score: <span th:text="${score}">0</span>
+</p>
+
+<p><a th:href="@{/quiz}">Try Again</a></p>
+</body>
+</html>
