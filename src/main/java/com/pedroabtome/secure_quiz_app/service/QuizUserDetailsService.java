@@ -20,7 +20,7 @@ public class QuizUserDetailsService implements UserDetailsService {
     // Stores users in memory, keyed by username
     private final Map<String, User> usersByUsername = new ConcurrentHashMap<>();
 
-    // Used to hash passwords (e.g., BCrypt). We'll configure the bean later in SecurityConfig.
+    // Used to hash passwords (e.g., BCrypt)
     private final PasswordEncoder passwordEncoder;
 
     public QuizUserDetailsService(PasswordEncoder passwordEncoder) {

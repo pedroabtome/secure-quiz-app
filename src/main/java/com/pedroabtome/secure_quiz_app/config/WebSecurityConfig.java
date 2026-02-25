@@ -14,14 +14,8 @@ import com.pedroabtome.secure_quiz_app.service.QuizUserDetailsService;
 @Configuration
 public class WebSecurityConfig {
 
-    private final QuizUserDetailsService quizUserDetailsService;
-
-    public WebSecurityConfig(QuizUserDetailsService quizUserDetailsService) {
-        this.quizUserDetailsService = quizUserDetailsService;
-    }
-
     @Bean
-    public UserDetailsService userDetailsService() {
+    public UserDetailsService userDetailsService(QuizUserDetailsService quizUserDetailsService) {
         return quizUserDetailsService;
     }
 
@@ -31,18 +25,20 @@ public class WebSecurityConfig {
     }
 
     @Bean
-    public DaoAuthenticationProvider authenticationProvider() {
-    DaoAuthenticationProvider authProvider =
-            new DaoAuthenticationProvider(userDetailsService());
+    public DaoAuthenticationProvider authenticationProvider(
+            UserDetailsService userDetailsService,
+            PasswordEncoder passwordEncoder) {
 
-    authProvider.setPasswordEncoder(passwordEncoder());
-    return authProvider;
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider(userDetailsService);
+        authProvider.setPasswordEncoder(passwordEncoder);
+        return authProvider;
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http,
+                                                   DaoAuthenticationProvider authenticationProvider) throws Exception {
         http
-            .authenticationProvider(authenticationProvider())
+            .authenticationProvider(authenticationProvider)
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/login", "/registration", "/register").permitAll()
                 .requestMatchers("/quizList", "/addQuiz", "/editQuiz/**", "/deleteQuiz/**").hasRole("ADMIN")

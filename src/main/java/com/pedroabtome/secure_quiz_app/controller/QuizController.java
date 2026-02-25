@@ -35,16 +35,16 @@ public class QuizController {
     }
 
     // GET request for retrieving the registration page
-    @GetMapping("/register")
+   @GetMapping("/registration")
     public String showRegistrationPage(Model model) {
         model.addAttribute("user", new User());
-        return "register";
-    }
+        return "registration";
+}
 
     // POST request for registering user
     @PostMapping("/register")
-    public String registerUser(@ModelAttribute User user) {
-        quizUserDetailsService.registerUser(
+    public String registerUser(@ModelAttribute("user") User user) {
+    quizUserDetailsService.registerUser(
         user.getUsername(),
         user.getPassword(),
         user.getEmail(),
@@ -52,6 +52,12 @@ public class QuizController {
 );
         return "redirect:/login";
     }
+
+    @GetMapping("/quiz")
+public String showQuizPage(Model model) {
+    model.addAttribute("quizzes", questionsService.loadQuizzes());
+    return "quiz";
+}
 
     // GET request for retrieving quiz questions (home page)
     @GetMapping({"/", "/home"})
